@@ -46,15 +46,16 @@ module vid_gen(
         end
     else
         if(CounterXmaxed)
-            CounterX <= 0;
+            begin
+                CounterX <= 0;
+
+                if(CounterYmaxed)
+                    CounterY <= 0;
+                else
+                    CounterY <= CounterY + 1;
+            end
         else
             CounterX <= CounterX + 1;
-
-    always @(posedge CounterXmaxed)
-        if(CounterYmaxed)
-            CounterY <= 0;
-        else
-            CounterY <= CounterY + 1;
 
     reg vga_HS;
     reg vga_VS;
