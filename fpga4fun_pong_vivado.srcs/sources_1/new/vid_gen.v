@@ -35,8 +35,8 @@ module vid_gen(
     // The devices I have for testing do not support 640x480, 720x576 or 800x600 resolutions.
     reg[10:0] CounterX;
     reg[10:0] CounterY;
-    wire CounterXmaxed = (CounterX==11'd1687);
-    wire CounterYmaxed = (CounterY==11'd1065);
+    wire CounterXmaxed = (CounterX==11'h697);
+    wire CounterYmaxed = (CounterY==11'h429);
 
     always @(posedge CLK)
     if (RST)
@@ -60,8 +60,9 @@ module vid_gen(
     reg vga_VS;
     always @(posedge CLK)
     begin
-        vga_HS <= (CounterX[10:6]==0); // active for 64 clocks
-        vga_VS <= (CounterY[10:2] == 0); // active for 4 lines
+        // tweak the following values to move the display 
+        vga_HS <= (CounterX[10:6] == 5'h34); // active for 64 clocks
+        vga_VS <= (CounterY[10:2] == 9'h10a); // active for 4 lines
     end
     assign vga_h_sync = ~vga_HS;
     assign vga_v_sync = ~vga_VS;
