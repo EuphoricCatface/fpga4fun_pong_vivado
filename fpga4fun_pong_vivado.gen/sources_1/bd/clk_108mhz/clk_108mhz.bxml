@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root MajorVersion="0" MinorVersion="39">
+  <CompositeFile CompositeFileTopName="clk_108mhz" CanBeSetAsTop="false" CanDisplayChildGraph="true">
+    <Description>Composite Fileset</Description>
+    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1629546555"/>
+    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1629546555"/>
+    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1629546555"/>
+    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1629546555"/>
+    <FileCollection Name="SOURCES" Type="SOURCES">
+      <File Name="synth/clk_108mhz.v" Type="Verilog">
+        <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+      </File>
+      <File Name="sim/clk_108mhz.v" Type="Verilog">
+        <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="clk_108mhz_ooc.xdc" Type="XDC">
+        <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="OUT_OF_CONTEXT"/>
+      </File>
+      <File Name="hw_handoff/clk_108mhz.hwh" Type="HwHandoff">
+        <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="HW_HANDOFF"/>
+      </File>
+      <File Name="clk_108mhz.bda">
+        <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="HW_HANDOFF"/>
+      </File>
+      <File Name="hw_handoff/clk_108mhz_bd.tcl">
+        <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="HW_HANDOFF"/>
+      </File>
+      <File Name="synth/clk_108mhz.hwdef">
+        <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="HW_HANDOFF"/>
+      </File>
+      <File Name="sim/clk_108mhz.protoinst">
+        <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+    </FileCollection>
+  </CompositeFile>
+</Root>

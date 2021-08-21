@@ -1,0 +1,9 @@
+{
+	"version": "1.0",
+	"modules": {
+		"clk_108mhz": {
+			"proto_instances": {
+			}
+		}
+	}
+}
