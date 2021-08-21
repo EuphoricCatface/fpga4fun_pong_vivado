@@ -39,24 +39,23 @@ module vid_gen(
     wire CounterYmaxed = (CounterY==11'd1065);
 
     always @(posedge CLK)
-    begin
-        if (RST)
-            begin
-                CounterX <= 0;
-                CounterY <= 0;
-            end
+    if (RST)
+        begin
+            CounterX <= 0;
+            CounterY <= 0;
+        end
+    else
+        if(CounterXmaxed)
+            CounterX <= 0;
         else
-            if(CounterXmaxed)
-                begin
-                    CounterX <= 0;
-                    if(CounterYmaxed)
-                        CounterY <= 0;
-                    else
-                        CounterY <= CounterY + 1;
-                end
-            else
-                CounterX <= CounterX + 1;
-    end
+            CounterX <= CounterX + 1;
+
+    always @(posedge CounterXmaxed)
+        if(CounterYmaxed)
+            CounterY <= 0;
+        else
+            CounterY <= CounterY + 1;
+
     reg vga_HS;
     reg vga_VS;
     always @(posedge CLK)
