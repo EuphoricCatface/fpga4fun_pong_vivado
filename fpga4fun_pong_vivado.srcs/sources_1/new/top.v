@@ -32,18 +32,22 @@ module top(
     output vga_v_sync
     );
     wire CLK_108;
+    wire inDisplayArea;
+    wire [10:0] CounterX;
+    wire [10:0] CounterY;
     
     clk_108mhz clk_108mhz_i0
        (.clk_in1_0(CLK),
         .clk_out1_0(CLK_108),
         .reset_0(1'b0));
-        
-    vid_gen vid_gen_i0
+
+    hvsync_gen hvsync_gen_i0
         (.CLK(CLK_108),
         .RST(RST),
-        .VGA_RED_3(VGA_RED_3),
-        .VGA_BLUE_3(VGA_BLUE_3),
-        .VGA_GREEN_3(VGA_GREEN_3),
+
+        .inDisplayArea(inDisplayArea),
+        .CounterX(CounterX),
+        .CounterY(CounterY),
     
         .vga_h_sync(vga_h_sync),
         .vga_v_sync(vga_v_sync)
