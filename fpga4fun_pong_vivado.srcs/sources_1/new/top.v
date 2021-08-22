@@ -52,4 +52,20 @@ module top(
         .vga_h_sync(vga_h_sync),
         .vga_v_sync(vga_v_sync)
         );
+
+    wire border = (CounterX[9:3] == 0) || (CounterX[9:3] == 79)
+                    || (CounterY[8:3] == 0) || (CounterY[8:3] == 59);
+    // Value taken from 640x480. Probably will show up smaller
+    wire R = border;
+    wire G = border;
+    wire B = border;
+
+    reg VGA_RED_3, VGA_GREEN_3, VGA_BLUE_3;
+    always @(posedge CLK_108)
+    begin
+        VGA_RED_3  <= R & inDisplayArea;
+        VGA_BLUE_3 <= B & inDisplayArea;
+        VGA_GREEN_3 <= G & inDisplayArea;
+    end
+
 endmodule
