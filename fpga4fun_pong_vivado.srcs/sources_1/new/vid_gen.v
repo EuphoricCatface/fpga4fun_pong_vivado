@@ -24,9 +24,9 @@ module hvsync_gen(
     input CLK,
     input RST,
 
-    output inDisplayArea,
-    output[10:0] CounterX,
-    output[10:0] CounterY,
+    output reg inDisplayArea,
+    output reg [10:0] CounterX,
+    output reg [10:0] CounterY,
 
     output vga_h_sync,
     output vga_v_sync
@@ -35,8 +35,6 @@ module hvsync_gen(
     // The devices I have for testing do not support 640x480, 720x576 or 800x600 resolutions.
     wire CounterXmaxed = (CounterX==11'h697);
     wire CounterYmaxed = (CounterY==11'h429);
-    reg[10:0] CounterX;
-    reg[10:0] CounterY;
 
     always @(posedge CLK)
     if (RST)
@@ -67,7 +65,6 @@ module hvsync_gen(
         vga_VS <= (CounterY[10:2] == (11'h400 >> 2)); // active for 4 lines
     end
 
-    reg inDisplayArea;
     always @(posedge CLK)
     if (inDisplayArea == 0)
         inDisplayArea <= (CounterXmaxed) && (CounterY < 1024);

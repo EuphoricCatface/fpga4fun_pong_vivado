@@ -24,9 +24,7 @@ module top(
     input CLK,
     input RST,
 
-    output VGA_RED_3,
-    output VGA_BLUE_3,
-    output VGA_GREEN_3,
+    output reg VGA_RED_3, VGA_BLUE_3, VGA_GREEN_3,
 
     output vga_h_sync,
     output vga_v_sync
@@ -59,7 +57,6 @@ module top(
     wire G = border;
     wire B = border;
 
-    reg VGA_RED_3, VGA_GREEN_3, VGA_BLUE_3;
     always @(posedge CLK_108)
     begin
         VGA_RED_3  <= R & inDisplayArea;
