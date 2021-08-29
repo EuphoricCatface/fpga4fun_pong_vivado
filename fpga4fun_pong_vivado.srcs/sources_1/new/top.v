@@ -82,6 +82,26 @@ module top(
             end
     end
 
+    reg UpdateBallPosition;     // active only once for every video frame
+    always @(posedge CLK_108) UpdateBallPosition <= (CounterY==1024) & (CounterX == 0);
+
+    reg ball_dirX, ball_dirY;
+    always @(posedge CLK_108)
+    if(UpdateBallPosition)
+    begin
+        if(~(CollisionX1 & CollisionX2))
+        begin
+            ballX <= ballX + (ball_dirX ? -1 : 1);
+            if (CollisionX2) ball_dirX <= 1; else if (CollisionX1) ball_dirX <= 0;
+        end
+
+        if(~(CollisionY1 & CollisionY2))
+        begin
+            ballY <= ballY + (ball_dirY ? -1 : 1);
+            if (CollisionY2) ball_dirY <= 1; else if (CollisionY1) ball_dirY <= 0;
+        end
+    end
+
     wire border = (CounterX[10:3] == 0) || (CounterX[10:3] == ((11'h500 >> 3) - 1))
     || (CounterY[10:3] == 0) || (CounterY[10:3] == ((11'h400 >> 3) - 1));
     wire paddle = (CounterX >= PaddlePosition + 8) && (CounterX <= PaddlePosition+120) && (CounterY[10:4] == (10'h3FF >> 4) - 3);
