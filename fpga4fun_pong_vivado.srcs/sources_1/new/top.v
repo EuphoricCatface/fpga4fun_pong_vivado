@@ -133,7 +133,12 @@ module top(
 
     reg ball_dirX, ball_dirY;
     always @(posedge CLK_108)
-    if(UpdateBallPosition)
+    if (RST)
+    begin
+        ballX = (1280 / 2);
+        ballY = (1024 / 2);
+    end
+    else if (UpdateBallPosition)
     begin
         if(~(CollisionX1 & CollisionX2))
         begin
