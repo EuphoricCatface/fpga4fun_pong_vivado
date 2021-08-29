@@ -1,3 +1,16 @@
+## 2021-08-29
+Progresses:  
+- Reorganization of code pieces  
+Notably, I have realized that manipulating Y on posedge CounterXmaxed causes problem, something like having two driving pins of which one is constant.  
+I think it means initialization to 0 on RST pin, inside posedge CLK.  
+So, I guess it is recommended to drive a register in blocks of same triggering...  
+- Generalize vid\_gen to hvsync\_gen  
+- Proper boarder drawing  
+Two things to note: one is included in commit message, that it is much less confusing to compute numbers in source rather than in your brain or on a paper.  
+Another is that my display device seemed to show pixels mostly fine with wrong timings. Sync pulses were positioned without back porch, and only thing it seemed to be confused was the timing of the last pixel. It would show jagged pattern at the rightmost end of the screen.  
+- Clean warnings
+Slowly getting grasp of the difference between wire and reg...  
+
 ## 2021-08-22
 First working output!
 
