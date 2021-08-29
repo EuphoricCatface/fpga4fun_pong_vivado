@@ -53,9 +53,8 @@ module top(
         .vga_v_sync(vga_v_sync)
         );
 
-    wire border = (CounterX[9:3] == 0) || (CounterX[9:3] == 79)
-                    || (CounterY[8:3] == 0) || (CounterY[8:3] == 59);
-    // Value taken from 640x480. Probably will show up smaller
+    wire border = (CounterX[10:3] == 0) || (CounterX[10:3] == ((11'h500 >> 3) - 1))
+                    || (CounterY[10:3] == 0) || (CounterY[10:3] == ((11'h400 >> 3) - 1));
     wire R = border;
     wire G = border;
     wire B = border;

@@ -63,8 +63,8 @@ module hvsync_gen(
     always @(posedge CLK)
     begin
         // tweak the following values to move the display 
-        vga_HS <= (CounterX[10:6] == 5'h34); // active for 64 clocks
-        vga_VS <= (CounterY[10:2] == 9'h10a); // active for 4 lines
+        vga_HS <= (CounterX[10:6] == (11'h540 >> 6)); // active for 64 clocks
+        vga_VS <= (CounterY[10:2] == (11'h400 >> 2)); // active for 4 lines
     end
 
     reg inDisplayArea;
