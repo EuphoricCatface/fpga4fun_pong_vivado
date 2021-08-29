@@ -41,7 +41,6 @@ module hvsync_gen(
         begin
             CounterX <= 0;
             CounterY <= 0;
-            inDisplayArea <= 0;
         end
     else
         if(CounterXmaxed)
