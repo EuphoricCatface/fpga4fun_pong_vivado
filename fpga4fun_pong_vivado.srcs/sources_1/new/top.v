@@ -22,37 +22,40 @@
 
 module top(
     input CLK,
+
     input RST,
+    input BTNL,
+    input BTNR,
 
     output reg VGA_RED_3, VGA_BLUE_3, VGA_GREEN_3,
 
     output vga_h_sync,
     output vga_v_sync
-    );
+);
     wire CLK_108;
     wire inDisplayArea;
     wire [10:0] CounterX;
     wire [10:0] CounterY;
-    
+
     clk_108mhz clk_108mhz_i0
-       (.clk_in1_0(CLK),
+    (.clk_in1_0(CLK),
         .clk_out1_0(CLK_108),
         .reset_0(1'b0));
 
     hvsync_gen hvsync_gen_i0
-        (.CLK(CLK_108),
+    (.CLK(CLK_108),
         .RST(RST),
 
         .inDisplayArea(inDisplayArea),
         .CounterX(CounterX),
         .CounterY(CounterY),
-    
+
         .vga_h_sync(vga_h_sync),
         .vga_v_sync(vga_v_sync)
-        );
+    );
 
     wire border = (CounterX[10:3] == 0) || (CounterX[10:3] == ((11'h500 >> 3) - 1))
-                    || (CounterY[10:3] == 0) || (CounterY[10:3] == ((11'h400 >> 3) - 1));
+    || (CounterY[10:3] == 0) || (CounterY[10:3] == ((11'h400 >> 3) - 1));
     wire R = border;
     wire G = border;
     wire B = border;
@@ -63,5 +66,23 @@ module top(
         VGA_BLUE_3 <= B & inDisplayArea;
         VGA_GREEN_3 <= G & inDisplayArea;
     end
+
+    //PS/2 mouse control to be implemented later
+    reg [9:0] PaddlePosition;
+    always @(posedge CLK_108)
+    begin
+        if (RST)
+            PaddlePosition <= 9'h1FF;
+        else
+            begin
+                if (BTNL && !BTNR)
+                    if (PaddlePosition) // make sure the value doesn't underflow
+                        PaddlePosition <= PaddlePosition - 1;
+                if (!BTNL && BTNR)
+                    if (~&PaddlePosition) // make sure the value doesn't overflow
+                        PaddlePosition <= PaddlePosition + 1;
+            end
+    end
+
 
 endmodule
