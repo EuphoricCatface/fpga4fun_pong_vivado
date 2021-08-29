@@ -85,6 +85,21 @@ module top(
     wire border = (CounterX[10:3] == 0) || (CounterX[10:3] == ((11'h500 >> 3) - 1))
     || (CounterY[10:3] == 0) || (CounterY[10:3] == ((11'h400 >> 3) - 1));
     wire paddle = (CounterX >= PaddlePosition + 8) && (CounterX <= PaddlePosition+120) && (CounterY[10:4] == (10'h3FF >> 4) - 3);
+    wire BouncingObject = border | paddle; //active if the border or paddle is redrawing itself
+
+    reg CollisionX1, CollisionX2, CollisionY1, CollisionY2;
+    always @(posedge CLK_108)
+    begin
+        if (BouncingObject & (CounterX == ballX) & (CounterY == ballY + 8))
+            CollisionX1 <= 1;
+        if (BouncingObject & (CounterX == ballX + 16) & (CounterY == ballY + 8))
+            CollisionX2 <= 1;
+        if (BouncingObject & (CounterX == ballX + 8) & (CounterY == BallY))
+            CollisionY1 <= 1;
+        if (BouncingObject & (CounterX == BallX+8) & (CounterY == ballY + 16))
+            CollisionY2 <= 1;
+    end
+
     wire R = border | (CounterX[3] | CounterY[3]) | paddle;
     wire G = border | paddle;
     wire B = border | paddle;
