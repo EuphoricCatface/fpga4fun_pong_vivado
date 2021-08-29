@@ -132,9 +132,9 @@ module top(
             CollisionX1 <= 1;
         if (BouncingObject & (CounterX == ballX + 16) & (CounterY == ballY + 8))
             CollisionX2 <= 1;
-        if (BouncingObject & (CounterX == ballX + 8) & (CounterY == BallY))
+        if (BouncingObject & (CounterX == ballX + 8) & (CounterY == ballY))
             CollisionY1 <= 1;
-        if (BouncingObject & (CounterX == BallX+8) & (CounterY == ballY + 16))
+        if (BouncingObject & (CounterX == ballX+8) & (CounterY == ballY + 16))
             CollisionY2 <= 1;
     end
 
