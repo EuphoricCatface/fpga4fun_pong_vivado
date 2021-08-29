@@ -138,9 +138,9 @@ module top(
             CollisionY2 <= 1;
     end
 
-    wire R = border | (CounterX[3] | CounterY[3]) | paddle;
-    wire G = border | paddle;
-    wire B = border | paddle;
+    wire R = BouncingObject | (CounterX[3] | CounterY[3]) | ball;
+    wire G = BouncingObject | ball;
+    wire B = BouncingObject | ball;
 
     always @(posedge CLK_108)
     begin
