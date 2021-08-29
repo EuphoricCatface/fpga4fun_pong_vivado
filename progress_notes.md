@@ -1,3 +1,30 @@
+## Conclusion 
+This concludes the project available on fpga4fun.com.  
+It is not exactly a neat conclusion - even comparing to the 
+original page, it still lacks a bit of polishings like
+proper paddle limit, mouse support (If I implement it, it will probably be 
+Digilent / Xilinx only thing, if not Basys3 only, as the board has
+onboard USB HID to PS/2 peripheral), update timing.  
+
+I can also imagine other aspects like tweaking the speeds, visuals,
+game over, the goal of the game (enemy AI, 2 player or even Breakout 
+style) and so on.  
+
+Should I ever add more stuffs on this project, I think I'll create 
+another branch than master, in order to encourage experimenting yourself. 
+Regardless, I guess this is it for now. 
+
+Now I realize there are many projects branched from the PongGame project, 
+so I'm not sure if anybody is going to find this project particularly useful.  
+Maybe you could use it as a reference if you're completely lost about Vivado?
+Anyways, uh, I guess, I hope you have great start for your FPGA project!  
+
+## 2021-08-29\_2
+Progresses:
+- Printing, and collision check of the ball  
+Nothing too deviating from the original article.  
+
+
 ## 2021-08-29
 Progresses:  
 - Reorganization of code pieces  
