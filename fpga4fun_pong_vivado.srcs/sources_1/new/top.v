@@ -54,25 +54,12 @@ module top(
         .vga_v_sync(vga_v_sync)
     );
 
-    wire border = (CounterX[10:3] == 0) || (CounterX[10:3] == ((11'h500 >> 3) - 1))
-    || (CounterY[10:3] == 0) || (CounterY[10:3] == ((11'h400 >> 3) - 1));
-    wire R = border;
-    wire G = border;
-    wire B = border;
-
-    always @(posedge CLK_108)
-    begin
-        VGA_RED_3  <= R & inDisplayArea;
-        VGA_BLUE_3 <= B & inDisplayArea;
-        VGA_GREEN_3 <= G & inDisplayArea;
-    end
-
     //PS/2 mouse control to be implemented later
-    reg [9:0] PaddlePosition;
+    reg [10:0] PaddlePosition;
     always @(posedge CLK_108)
     begin
         if (RST)
-            PaddlePosition <= 9'h1FF;
+            PaddlePosition <= (1280 / 2);
         else
             begin
                 if (BTNL && !BTNR)
@@ -82,6 +69,20 @@ module top(
                     if (~&PaddlePosition) // make sure the value doesn't overflow
                         PaddlePosition <= PaddlePosition + 1;
             end
+    end
+
+    wire border = (CounterX[10:3] == 0) || (CounterX[10:3] == ((11'h500 >> 3) - 1))
+    || (CounterY[10:3] == 0) || (CounterY[10:3] == ((11'h400 >> 3) - 1));
+    wire paddle = (CounterX >= PaddlePosition + 8) && (CounterX <= PaddlePosition+120) && (CounterY[10:4] == (10'h3FF >> 4) - 3);
+    wire R = border | (CounterX[3] | CounterY[3]) | paddle;
+    wire G = border | paddle;
+    wire B = border | paddle;
+
+    always @(posedge CLK_108)
+    begin
+        VGA_RED_3  <= R & inDisplayArea;
+        VGA_BLUE_3 <= B & inDisplayArea;
+        VGA_GREEN_3 <= G & inDisplayArea;
     end
 
 
