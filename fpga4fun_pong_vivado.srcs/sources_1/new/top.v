@@ -82,6 +82,24 @@ module top(
             end
     end
 
+    reg [10:0] ballX;
+    reg [10:0] ballY;
+    reg ball_inX, ball_inY;
+
+    always @(posedge CLK_108)
+    if (ball_inX == 0)
+        ball_inX <= (CounterX == ballX) & ball_inY;
+    else
+        ball_inX <= !(CounterX == ballX + 16);
+
+    always @(posedge CLK_108)
+    if (ball_inY == 0)
+        ball_inY <= (CounterY == ballY);
+    else
+        ball_inY <= !(CounterY == ballY+16);
+
+    wire ball = ball_inX & ball_inY;
+
     reg UpdateBallPosition;     // active only once for every video frame
     always @(posedge CLK_108) UpdateBallPosition <= (CounterY==1024) & (CounterX == 0);
 
