@@ -86,6 +86,7 @@ module top(
     || (CounterY[10:3] == 0) || (CounterY[10:3] == ((11'h400 >> 3) - 1));
     wire paddle = (CounterX >= PaddlePosition + 8) && (CounterX <= PaddlePosition+120) && (CounterY[10:4] == (10'h3FF >> 4) - 3);
     wire BouncingObject = border | paddle; //active if the border or paddle is redrawing itself
+
     reg [10:0] ballX;
     reg [10:0] ballY;
     reg ball_inX, ball_inY;
@@ -104,9 +105,31 @@ module top(
 
     wire ball = ball_inX & ball_inY;
 
-    reg UpdateBallPosition;     // active only once for every video frame
-    always @(posedge CLK_108) UpdateBallPosition <= (CounterY==1024) & (CounterX == 0);
+    reg ResetCollision;     // active only once for every video frame
+    always @(posedge CLK_108) ResetCollision <= (CounterY == 1024) & (CounterX == 0);
+
     reg CollisionX1, CollisionX2, CollisionY1, CollisionY2;
+    always @(posedge CLK_108)
+    begin
+        if (ResetCollision)
+            CollisionX1 <= 0;
+        else if (BouncingObject & (CounterX == ballX) & (CounterY == ballY + 8))
+            CollisionX1 <= 1;
+        if (ResetCollision)
+            CollisionX2 <= 0;
+        else if (BouncingObject & (CounterX == ballX + 16) & (CounterY == ballY + 8))
+            CollisionX2 <= 1;
+        if (ResetCollision)
+            CollisionY1 <= 0;
+        else if (BouncingObject & (CounterX == ballX + 8) & (CounterY == ballY))
+            CollisionY1 <= 1;
+        if (ResetCollision)
+            CollisionY2 <= 0;
+        else if (BouncingObject & (CounterX == ballX+8) & (CounterY == ballY + 16))
+            CollisionY2 <= 1;
+    end
+
+    wire UpdateBallPosition = ResetCollision;
 
     reg ball_dirX, ball_dirY;
     always @(posedge CLK_108)
@@ -123,18 +146,6 @@ module top(
             ballY <= ballY + (ball_dirY ? -1 : 1);
             if (CollisionY2) ball_dirY <= 1; else if (CollisionY1) ball_dirY <= 0;
         end
-    end
-
-    always @(posedge CLK_108)
-    begin
-        if (BouncingObject & (CounterX == ballX) & (CounterY == ballY + 8))
-            CollisionX1 <= 1;
-        if (BouncingObject & (CounterX == ballX + 16) & (CounterY == ballY + 8))
-            CollisionX2 <= 1;
-        if (BouncingObject & (CounterX == ballX + 8) & (CounterY == ballY))
-            CollisionY1 <= 1;
-        if (BouncingObject & (CounterX == ballX+8) & (CounterY == ballY + 16))
-            CollisionY2 <= 1;
     end
 
     wire R = BouncingObject | (CounterX[3] | CounterY[3]) | ball;
