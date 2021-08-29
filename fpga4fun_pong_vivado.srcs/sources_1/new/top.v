@@ -54,9 +54,20 @@ module top(
         .vga_v_sync(vga_v_sync)
     );
 
+    // 103.00Hz clock
+    reg [20:0] cnt;
+    always @(posedge CLK_108)
+    begin
+        if (RST)
+            cnt <= 0;
+        else
+            cnt <= cnt + 1;
+    end
+
     //PS/2 mouse control to be implemented later
     reg [10:0] PaddlePosition;
-    always @(posedge CLK_108)
+    always @(posedge cnt[18])
+    // NOTE: Image update might happen mid-frame
     begin
         if (RST)
             PaddlePosition <= (1280 / 2);
